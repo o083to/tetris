@@ -29,6 +29,7 @@ public class BoardPanel extends JPanel implements Observer {
         this.game = game;
         setPreferredSize(new Dimension(Board.WIDTH * SQUARE_SIZE, Board.HEIGHT * SQUARE_SIZE));
         setBackground(BACKGROUND_COLOR);
+        setFocusable(true);
     }
 
     @Override

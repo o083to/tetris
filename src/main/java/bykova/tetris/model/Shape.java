@@ -63,7 +63,7 @@ public class Shape extends Observable {
 
     public void moveRight() {
         if (canMoveRight()) {
-            move(-1, 0);
+            move(1, 0);
         }
     }
 

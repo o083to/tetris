@@ -1,5 +1,6 @@
 package bykova.tetris;
 
+import bykova.tetris.controller.KeyController;
 import bykova.tetris.model.Game;
 import bykova.tetris.view.GameView;
 
@@ -9,6 +10,7 @@ public class Main {
         Game game = new Game();
         GameView gameView = new GameView(game);
         game.setBoardObserver(gameView.getBoardPanel());
+        gameView.getBoardPanel().addKeyListener(new KeyController(game));
         game.start();
     }
 }
