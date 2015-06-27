@@ -21,4 +21,12 @@ public class Square {
     public Square add(Square s) {
         return new Square(this.x + s.getX(), this.y + s.getY());
     }
+
+    public Square rotate(Square center, int a, int b) {
+        int x0 = center.getX();
+        int y0 = center.getY();
+        int newX = x0 + a * (this.y - y0);
+        int newY = y0 + b * (this.x - x0);
+        return new Square(newX, newY);
+    }
 }

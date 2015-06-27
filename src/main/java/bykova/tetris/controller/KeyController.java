@@ -22,6 +22,12 @@ public class KeyController extends KeyAdapter {
             case KeyEvent.VK_RIGHT :
                 game.getCurrentShape().moveRight();
                 break;
+            case KeyEvent.VK_ALT :
+                game.getCurrentShape().rotateLeft();
+                break;
+            case KeyEvent.VK_CONTROL :
+                game.getCurrentShape().rotateRight();
+                break;
         }
     }
 }

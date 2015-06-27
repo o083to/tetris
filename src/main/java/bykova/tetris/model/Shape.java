@@ -68,26 +68,30 @@ public class Shape extends Observable {
     }
 
     public void rotateLeft() {
+        if (type == ShapeType.O) return;
         rotate(1, -1);
     }
 
     public void rotateRight() {
+        if (type == ShapeType.O) return;
         rotate(-1, 1);
     }
 
     private void rotate(int a, int b) {
         List<Square> newSquares = new ArrayList<>(4);
         Set<Square> changedSet = new HashSet<>();
+
         Square center = squares.get(0);
         newSquares.add(center);
+
         for (int i = 1; i < 4; i++) {
             Square old = squares.get(i);
-            int newX = a * (old.getY() - center.getY());
-            int newY = b * (old.getX() - center.getX());
-            if (game.isFreeSquare(newX, newY)) {
+            Square newSquare = old.rotate(center, a, b);
+
+            if (game.isFreeSquare(newSquare.getX(), newSquare.getY())) {
                 changedSet.add(old);
-                Square newSquare = new Square(newX, newY);
                 changedSet.add(newSquare);
+
                 newSquares.add(newSquare);
             } else {
                 return;
