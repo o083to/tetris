@@ -55,7 +55,9 @@ public class Game implements ActionListener {
         // todo: It is a test
         currentShape.moveDown();
         if (isFallingFinished()) {
-            stop();
+            board.addFallenShape(currentShape);
+            setNewShape();
+            currentShape.addObserver(boardObserver);
         }
     }
 

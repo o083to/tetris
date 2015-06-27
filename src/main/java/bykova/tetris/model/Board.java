@@ -22,6 +22,13 @@ public class Board {
         return squares;
     }
 
+    public void addFallenShape(Shape shape) {
+        ShapeType type = shape.getType();
+        for (Square s : shape.getSquares()) {
+            squares[s.getX()][s.getY()] = type;
+        }
+    }
+
     private static ShapeType[][] createSquares() {
         ShapeType[][] result = new ShapeType[WIDTH][HEIGHT];
         for (int i = 0; i < WIDTH; i++) {

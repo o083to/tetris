@@ -4,13 +4,13 @@ import java.util.*;
 
 public class Shape extends Observable {
 
-    private static final Map<ShapeType, List<Square>> OFFSETS = new HashMap<ShapeType, List<Square>>(7);
+    private static final Map<ShapeType, List<Square>> OFFSETS = new HashMap<>(7);
     static {
         OFFSETS.put(ShapeType.I, Arrays.asList(new Square(-1, 0), new Square(1, 0), new Square(2, 0)));
         OFFSETS.put(ShapeType.J, Arrays.asList(new Square(-1, -1), new Square(-1, 0), new Square(1, 0)));
         OFFSETS.put(ShapeType.L, Arrays.asList(new Square(-1, 0), new Square(1, 0), new Square(1, -1)));
-        OFFSETS.put(ShapeType.O, Arrays.asList(new Square(1, 0), new Square(0, -1), new Square(-1, -1)));
-        OFFSETS.put(ShapeType.S, Arrays.asList(new Square(-1, 0), new Square(0, -1), new Square(-1, -1)));
+        OFFSETS.put(ShapeType.O, Arrays.asList(new Square(1, 0), new Square(0, -1), new Square(1, -1)));
+        OFFSETS.put(ShapeType.S, Arrays.asList(new Square(-1, 0), new Square(0, -1), new Square(1, -1)));
         OFFSETS.put(ShapeType.T, Arrays.asList(new Square(-1, 0), new Square(0, -1), new Square(1, 0)));
         OFFSETS.put(ShapeType.Z, Arrays.asList(new Square(-1, -1), new Square(0, -1), new Square(1, 0)));
     }
