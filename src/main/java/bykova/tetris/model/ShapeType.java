@@ -1,11 +1,23 @@
 package bykova.tetris.model;
 
-public interface ShapeType {
-    int I = 1;
-    int J = 2;
-    int L = 3;
-    int O = 4;
-    int S = 5;
-    int T = 6;
-    int Z = 7;
+public enum ShapeType {
+    EMPTY,
+    I,
+    J,
+    L,
+    O,
+    S,
+    T,
+    Z;
+
+    public static ShapeType fromInteger(int index) {
+        ShapeType[] values = values();
+        if (index < 0 || index >= values.length) {
+            throw new IllegalArgumentException(
+                    String.format("Index must be between 0 and %d. Actual value is %d.", values.length, index)
+            );
+        } else {
+            return values[index];
+        }
+    }
 }

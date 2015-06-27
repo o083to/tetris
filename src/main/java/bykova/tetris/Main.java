@@ -7,6 +7,8 @@ public class Main {
 
     public static void main(String args[]) {
         Game game = new Game();
-        new GameView(game);
+        GameView gameView = new GameView(game);
+        game.setBoardObserver(gameView.getBoardPanel());
+        game.start();
     }
 }
