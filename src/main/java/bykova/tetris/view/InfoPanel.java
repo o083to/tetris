@@ -25,6 +25,13 @@ public class InfoPanel extends JPanel {
         mainBox.add(new JLabel("Score:"));
         mainBox.add(scoreLabel);
         mainBox.add(gameFinishedLabel);
+
+        mainBox.add(new JLabel("Keys:"));
+        mainBox.add(new JLabel("Left: move left"));
+        mainBox.add(new JLabel("Right: move right"));
+        mainBox.add(new JLabel("Up: rotate left"));
+        mainBox.add(new JLabel("Down: rotate right"));
+        mainBox.add(new JLabel("Space: drop shape"));
     }
 
     public void setScore(int score) {
