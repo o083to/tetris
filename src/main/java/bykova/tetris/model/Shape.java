@@ -80,6 +80,7 @@ public class Shape extends Observable {
         for (int i = 1; i < 4; i++) {
             Square old = squares.get(i);
             Square newSquare = old.rotate(center, a, b);
+            if (!checkBounds(newSquare.getX(), newSquare.getY())) return;
             if (game.isFreeSquare(newSquare.getX(), newSquare.getY())) {
                 newSquares.add(newSquare);
             } else {
@@ -91,33 +92,31 @@ public class Shape extends Observable {
         notifyObservers();
     }
 
-    private boolean canMoveDown() {
+    private boolean checkBounds(int x, int y) {
+        return (x >= 0 && x < Board.WIDTH) && (y >= 0 && y < Board.HEIGHT);
+    }
+
+    private boolean canMove(int dx, int dy) {
         for (Square square : squares) {
-            if (!game.isFreeSquare(square.getX(), square.getY() + 1)) {
+            int x = square.getX() + dx;
+            int y = square.getY() + dy;
+            if (!checkBounds(x, y) || !game.isFreeSquare(x, y)) {
                 return false;
             }
         }
         return true;
+    }
+
+    private boolean canMoveDown() {
+        return canMove(0, 1);
     }
 
     private boolean canMoveLeft() {
-        for (Square square : squares) {
-            int x = square.getX();
-            if (x == 0 || !game.isFreeSquare(x - 1, square.getY())) {
-                return false;
-            }
-        }
-        return true;
+        return canMove(-1, 0);
     }
 
     private boolean canMoveRight() {
-        for (Square square : squares) {
-            int x = square.getX();
-            if ((x == Board.WIDTH - 1) || !game.isFreeSquare(x + 1, square.getY())) {
-                return false;
-            }
-        }
-        return true;
+        return canMove(1, 0);
     }
 
     private static List<Square> createSquares(Square center, ShapeType type) {

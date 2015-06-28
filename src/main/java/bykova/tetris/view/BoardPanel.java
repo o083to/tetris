@@ -46,7 +46,7 @@ public class BoardPanel extends JPanel implements Observer {
             ShapeType[][] shapeTypes = board.getSquares();
             for (int x = 0; x < Board.WIDTH; x++) {
                 for (int y = 0; y < Board.HEIGHT; y++) {
-                    Color color = SHAPE_COLORS.get(shapeTypes[x][y]);
+                    Color color = SHAPE_COLORS.get(shapeTypes[y][x]);
                     paintSquare(g2d, x * SQUARE_SIZE, y * SQUARE_SIZE, color);
                 }
             }

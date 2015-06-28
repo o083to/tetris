@@ -1,8 +1,9 @@
 package bykova.tetris.model;
 
 import java.util.Arrays;
+import java.util.Observable;
 
-public class Board {
+public class Board extends Observable {
 
     public static final int WIDTH = 10;
     public static final int HEIGHT = 20;
@@ -15,8 +16,12 @@ public class Board {
     }
 
     public boolean isSquareFilled(int x, int y) {
-        if (y < 0) return false;                    // If the shape just appeared and we can see only part of it.
-        return squares[x][y] != ShapeType.EMPTY;
+        if ((x < 0 || x >= WIDTH) || (y < 0 || y >= HEIGHT)) {
+            throw new IllegalArgumentException(
+                    String.format("Square with row = %d and column = %d doesn't exist.", y, x)
+            );
+        }
+        return squares[y][x] != ShapeType.EMPTY;
     }
 
     public ShapeType[][] getSquares() {
@@ -26,15 +31,21 @@ public class Board {
     public void addFallenShape(Shape shape) {
         ShapeType type = shape.getType();
         for (Square s : shape.getSquares()) {
-            squares[s.getX()][s.getY()] = type;
+            squares[s.getY()][s.getX()] = type;
         }
     }
 
     private static ShapeType[][] createSquares() {
-        ShapeType[][] result = new ShapeType[WIDTH][HEIGHT];
-        for (int i = 0; i < WIDTH; i++) {
-            Arrays.fill(result[i], ShapeType.EMPTY);
+        ShapeType[][] result = new ShapeType[HEIGHT][WIDTH];
+        for (int row = 0; row < HEIGHT; row++) {
+            result[row] = createEmptyRow();
         }
         return result;
+    }
+
+    private static ShapeType[] createEmptyRow() {
+        ShapeType[] row = new ShapeType[WIDTH];
+        Arrays.fill(row, ShapeType.EMPTY);
+        return row;
     }
 }
