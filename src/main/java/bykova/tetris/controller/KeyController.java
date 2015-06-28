@@ -28,6 +28,9 @@ public class KeyController extends KeyAdapter {
             case KeyEvent.VK_DOWN :
                 game.getCurrentShape().rotateRight();
                 break;
+            case KeyEvent.VK_SPACE:
+                game.speedUp();
+                break;
         }
     }
 }

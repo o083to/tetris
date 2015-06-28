@@ -9,6 +9,7 @@ import javax.swing.Timer;
 public class Game implements ActionListener {
 
     private static final int DELAY = 500;
+    private static final int SPEED_UP_DELAY = 40;
     private static final int SHAPE_TYPES_COUNT = 7;
     private static final int START_SHAPE_X = 4;
     private static final int START_SHAPE_Y = 0;
@@ -18,8 +19,10 @@ public class Game implements ActionListener {
     private Shape currentShape;
     private Random random = new Random();
     private Observer boardObserver;
+
     private boolean isNew = true;
     private boolean shapeFell;
+    private boolean isSpeedUp;
 
     public Game() {
         this.board = new Board();
@@ -52,6 +55,17 @@ public class Game implements ActionListener {
         timer.stop();
     }
 
+    public void speedUp() {
+        if (shapeFell) return;
+        isSpeedUp = true;
+        timer.setDelay(SPEED_UP_DELAY);
+    }
+
+    private void resetSpeed() {
+        isSpeedUp = false;
+        timer.setDelay(DELAY);
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (shapeFell) {
@@ -62,6 +76,9 @@ public class Game implements ActionListener {
         } else {
             currentShape.moveDown();
             if (isFallingFinished()) {
+                if (isSpeedUp) {
+                    resetSpeed();
+                }
                 board.addFallenShape(currentShape);
                 shapeFell = true;
             }
