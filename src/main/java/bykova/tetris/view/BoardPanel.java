@@ -79,13 +79,6 @@ public class BoardPanel extends JPanel implements Observer {
     @SuppressWarnings("unchecked")
     @Override
     public void update(Observable o, Object arg) {
-        Set<Square> changedSquares = (Set<Square>)arg;
-        for (Square square : changedSquares) {
-            repaint(
-                    square.getX() * SQUARE_SIZE,
-                    square.getY() * SQUARE_SIZE,
-                    SQUARE_SIZE, SQUARE_SIZE
-            );
-        }
+        repaint();
     }
 }

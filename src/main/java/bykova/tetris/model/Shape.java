@@ -43,16 +43,12 @@ public class Shape extends Observable {
     }
 
     private void move(int dx, int dy) {
-        Set<Square> changedSet = new HashSet<>();
         for (int i = 0; i < squares.size(); i++) {
             Square oldSquare = squares.get(i);
-            changedSet.add(oldSquare);
-            Square newSquare = new Square(oldSquare.getX() + dx, oldSquare.getY() + dy);
-            changedSet.add(newSquare);
-            squares.set(i, newSquare);
+            squares.set(i, new Square(oldSquare.getX() + dx, oldSquare.getY() + dy));
         }
         setChanged();
-        notifyObservers(changedSet);
+        notifyObservers();
     }
 
     public void moveLeft() {
@@ -79,19 +75,12 @@ public class Shape extends Observable {
 
     private void rotate(int a, int b) {
         List<Square> newSquares = new ArrayList<>(4);
-        Set<Square> changedSet = new HashSet<>();
-
         Square center = squares.get(0);
         newSquares.add(center);
-
         for (int i = 1; i < 4; i++) {
             Square old = squares.get(i);
             Square newSquare = old.rotate(center, a, b);
-
             if (game.isFreeSquare(newSquare.getX(), newSquare.getY())) {
-                changedSet.add(old);
-                changedSet.add(newSquare);
-
                 newSquares.add(newSquare);
             } else {
                 return;
@@ -99,7 +88,7 @@ public class Shape extends Observable {
         }
         this.squares = newSquares;
         setChanged();
-        notifyObservers(changedSet);
+        notifyObservers();
     }
 
     private boolean canMoveDown() {
