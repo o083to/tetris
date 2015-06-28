@@ -2,9 +2,7 @@ package bykova.tetris.model;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Observable;
-import java.util.Observer;
-import java.util.Random;
+import java.util.*;
 import javax.swing.Timer;
 
 public class Game extends Observable implements ActionListener {
@@ -14,6 +12,14 @@ public class Game extends Observable implements ActionListener {
     private static final int SHAPE_TYPES_COUNT = 7;
     private static final int START_SHAPE_X = 4;
     private static final int START_SHAPE_Y = 0;
+
+    private static final Map<Integer, Integer> POINTS = new HashMap<>(4);
+    static {
+        POINTS.put(1, 1);
+        POINTS.put(2, 3);
+        POINTS.put(3, 7);
+        POINTS.put(4, 15);
+    }
 
     private final Timer timer;
     private final Board board;
@@ -83,8 +89,8 @@ public class Game extends Observable implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (shapeFell) {
-            int points = board.removeFullRows();
-            addPoints(points);
+            int count = board.removeFullRows();
+            if (count != 0) addPoints(POINTS.get(count));
             tryToSetNewShape();
             currentShape.addObserver(boardObserver);
             shapeFell = false;
