@@ -7,7 +7,7 @@ import javax.swing.Timer;
 
 public class Game extends Observable implements ActionListener {
 
-    private static final int DELAY = 500;
+    private static final int DELAY = 300;
     private static final int SPEED_UP_DELAY = 40;
     private static final int SHAPE_TYPES_COUNT = 7;
     private static final int START_SHAPE_X = 4;

@@ -8,9 +8,11 @@ import java.awt.*;
 public class InfoPanel extends JPanel {
 
     private static final Color BACKGROUND_COLOR = new Color(139, 137, 112);
+    private static final Color GAME_OVER_TEXT_COLOR = new Color(0xff4500);
+    private static final Font FONT = new Font("Monospaced", Font.BOLD, 20);
 
     private final JLabel scoreLabel = new JLabel("0");
-    private final JLabel gameFinishedLabel = new JLabel();
+    private final JLabel gameFinishedLabel = new JLabel(" ");
 
     public InfoPanel() {
         setPreferredSize(
@@ -21,9 +23,12 @@ public class InfoPanel extends JPanel {
         Box mainBox = Box.createVerticalBox();
         add(mainBox);
 
-        //todo: Должно выглядеть нормально
         mainBox.add(new JLabel("Score:"));
+        scoreLabel.setFont(FONT);
         mainBox.add(scoreLabel);
+
+        gameFinishedLabel.setFont(FONT);
+        gameFinishedLabel.setForeground(GAME_OVER_TEXT_COLOR);
         mainBox.add(gameFinishedLabel);
 
         mainBox.add(new JLabel("Keys:"));
@@ -39,6 +44,6 @@ public class InfoPanel extends JPanel {
     }
 
     public void setGameFinishedMessage() {
-        gameFinishedLabel.setText("Game over.");
+        gameFinishedLabel.setText("Game over!");
     }
 }
