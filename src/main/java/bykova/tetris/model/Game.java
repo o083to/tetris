@@ -52,18 +52,18 @@ public class Game implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        // todo: It is a test
         currentShape.moveDown();
-        if (isFallingFinished()) {
-            board.addFallenShape(currentShape);
-            setNewShape();
-            currentShape.addObserver(boardObserver);
-        }
+        if (isFallingFinished()) onFallingFinished();
+    }
+
+    private void onFallingFinished() {
+        board.addFallenShape(currentShape);
+        setNewShape();
+        currentShape.addObserver(boardObserver);
     }
 
     public boolean isFreeSquare(int x, int y) {
-        //todo: Add implementation.
-        return true;
+        return !board.isSquareFilled(x, y);
     }
 
     private boolean isFallingFinished() {

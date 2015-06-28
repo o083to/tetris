@@ -15,6 +15,7 @@ public class Board {
     }
 
     public boolean isSquareFilled(int x, int y) {
+        if (y < 0) return false;                    // If the shape just appeared and we can see only part of it.
         return squares[x][y] != ShapeType.EMPTY;
     }
 
