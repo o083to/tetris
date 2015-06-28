@@ -9,6 +9,7 @@ public class Main {
     public static void main(String args[]) {
         Game game = new Game();
         GameView gameView = new GameView(game);
+        game.addObserver(gameView);
         game.setBoardObserver(gameView.getBoardPanel());
         gameView.getBoardPanel().addKeyListener(new KeyController(game));
         game.start();

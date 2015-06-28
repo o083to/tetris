@@ -2,11 +2,12 @@ package bykova.tetris.model;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Observable;
 import java.util.Observer;
 import java.util.Random;
 import javax.swing.Timer;
 
-public class Game implements ActionListener {
+public class Game extends Observable implements ActionListener {
 
     private static final int DELAY = 500;
     private static final int SPEED_UP_DELAY = 40;
@@ -19,6 +20,7 @@ public class Game implements ActionListener {
     private Shape currentShape;
     private Random random = new Random();
     private Observer boardObserver;
+    private int score;
 
     private boolean isNew = true;
     private boolean shapeFell;
@@ -36,6 +38,10 @@ public class Game implements ActionListener {
 
     public Shape getCurrentShape() {
         return currentShape;
+    }
+
+    public int getScore() {
+        return score;
     }
 
     public void setBoardObserver(Observer observer) {
@@ -66,10 +72,17 @@ public class Game implements ActionListener {
         timer.setDelay(DELAY);
     }
 
+    private void addPoints(int points) {
+        score += points;
+        setChanged();
+        notifyObservers(GameEvent.ScoreUpdated);
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (shapeFell) {
-            board.removeFullRows();
+            int points = board.removeFullRows();
+            addPoints(points);
             setNewShape();
             currentShape.addObserver(boardObserver);
             shapeFell = false;
