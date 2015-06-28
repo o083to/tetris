@@ -45,6 +45,9 @@ public class GameView extends JFrame implements Observer {
             case ScoreUpdated:
                 infoPanel.setScore(game.getScore());
                 break;
+            case GameFinished:
+                infoPanel.setGameFinishedMessage();
+                break;
         }
     }
 }

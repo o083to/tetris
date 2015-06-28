@@ -28,7 +28,7 @@ public class Game extends Observable implements ActionListener {
 
     public Game() {
         this.board = new Board();
-        setNewShape();
+        tryToSetNewShape();
         this.timer = new Timer(DELAY, this);
     }
 
@@ -59,6 +59,8 @@ public class Game extends Observable implements ActionListener {
 
     public void stop() {
         timer.stop();
+        setChanged();
+        notifyObservers(GameEvent.GameFinished);
     }
 
     public void speedUp() {
@@ -83,7 +85,7 @@ public class Game extends Observable implements ActionListener {
         if (shapeFell) {
             int points = board.removeFullRows();
             addPoints(points);
-            setNewShape();
+            tryToSetNewShape();
             currentShape.addObserver(boardObserver);
             shapeFell = false;
         } else {
@@ -112,11 +114,19 @@ public class Game extends Observable implements ActionListener {
         return false;
     }
 
-    private void setNewShape() {
-        this.currentShape = new Shape(
+    private void tryToSetNewShape() {
+        Shape shape = new Shape(
                 this,
                 ShapeType.fromInteger(random.nextInt(SHAPE_TYPES_COUNT) + 1),
                 new Square(START_SHAPE_X, START_SHAPE_Y)
         );
+        for (Square square : shape.getSquares()) {
+            int y = square.getY();
+            if (y >= 0 && board.isSquareFilled(square.getX(), y)) {
+                stop();
+                return;
+            }
+        }
+        currentShape = shape;
     }
 }

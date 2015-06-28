@@ -33,7 +33,7 @@ public class Board extends Observable {
     public void addFallenShape(Shape shape) {
         ShapeType type = shape.getType();
         for (Square s : shape.getSquares()) {
-            squares[s.getY()][s.getX()] = type;
+            if (s.getY() >= 0) squares[s.getY()][s.getX()] = type;
         }
         setChanged();
         notifyObservers();

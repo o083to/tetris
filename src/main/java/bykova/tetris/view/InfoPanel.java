@@ -10,6 +10,7 @@ public class InfoPanel extends JPanel {
     private static final Color BACKGROUND_COLOR = new Color(139, 137, 112);
 
     private final JLabel scoreLabel = new JLabel("0");
+    private final JLabel gameFinishedLabel = new JLabel();
 
     public InfoPanel() {
         setPreferredSize(
@@ -23,9 +24,14 @@ public class InfoPanel extends JPanel {
         //todo: Должно выглядеть нормально
         mainBox.add(new JLabel("Score:"));
         mainBox.add(scoreLabel);
+        mainBox.add(gameFinishedLabel);
     }
 
     public void setScore(int score) {
         scoreLabel.setText(String.valueOf(score));
+    }
+
+    public void setGameFinishedMessage() {
+        gameFinishedLabel.setText("Game over.");
     }
 }

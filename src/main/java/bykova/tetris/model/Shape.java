@@ -33,12 +33,9 @@ public class Shape extends Observable {
         return type;
     }
 
-    public boolean moveDown() {
+    public void moveDown() {
         if (canMoveDown()) {
             move(0, 1);
-            return true;
-        } else {
-            return false;
         }
     }
 
