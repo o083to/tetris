@@ -1,7 +1,9 @@
 package bykova.tetris.model;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Observable;
+import java.util.Set;
 
 public class Board extends Observable {
 
@@ -9,7 +11,7 @@ public class Board extends Observable {
     public static final int HEIGHT = 20;
     public static final int MAX_Y = HEIGHT - 1;
 
-    private final ShapeType[][] squares;
+    private ShapeType[][] squares;
 
     public Board() {
         squares = createSquares();
@@ -33,10 +35,49 @@ public class Board extends Observable {
         for (Square s : shape.getSquares()) {
             squares[s.getY()][s.getX()] = type;
         }
+        setChanged();
+        notifyObservers();
+    }
+
+    public int removeFullRows() {
+        Set<Integer> fullRowNumbers = getFullRowsNumbers();
+        if (!fullRowNumbers.isEmpty()) {
+            ShapeType[][] newSquares = new ShapeType[HEIGHT][];
+            int last = MAX_Y;
+            for (int sourceRow = MAX_Y; sourceRow >= 0; sourceRow--) {
+                if (!fullRowNumbers.contains(sourceRow)) {
+                    newSquares[last--] = squares[sourceRow];
+                }
+            }
+            while (last >= 0) {
+                newSquares[last--] = createEmptyRow();
+            }
+            squares = newSquares;
+            setChanged();
+            notifyObservers();
+        }
+        return fullRowNumbers.size();
+    }
+
+    private Set<Integer> getFullRowsNumbers() {
+        Set<Integer> numbers = new HashSet<>();
+        for (int row = 0; row < HEIGHT; row++) {
+            if (rowIsFull(squares[row])) {
+                numbers.add(row);
+            }
+        }
+        return numbers;
+    }
+
+    private static boolean rowIsFull(ShapeType[] row) {
+        for (ShapeType i : row) {
+            if (i == ShapeType.EMPTY) return false;
+        }
+        return true;
     }
 
     private static ShapeType[][] createSquares() {
-        ShapeType[][] result = new ShapeType[HEIGHT][WIDTH];
+        ShapeType[][] result = new ShapeType[HEIGHT][];
         for (int row = 0; row < HEIGHT; row++) {
             result[row] = createEmptyRow();
         }

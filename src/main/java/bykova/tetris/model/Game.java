@@ -19,6 +19,7 @@ public class Game implements ActionListener {
     private Random random = new Random();
     private Observer boardObserver;
     private boolean isNew = true;
+    private boolean shapeFell;
 
     public Game() {
         this.board = new Board();
@@ -42,6 +43,7 @@ public class Game implements ActionListener {
         if (isNew) {
             isNew = false;
             currentShape.addObserver(boardObserver);
+            board.addObserver(boardObserver);
         }
         timer.start();
     }
@@ -52,14 +54,18 @@ public class Game implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        currentShape.moveDown();
-        if (isFallingFinished()) onFallingFinished();
-    }
-
-    private void onFallingFinished() {
-        board.addFallenShape(currentShape);
-        setNewShape();
-        currentShape.addObserver(boardObserver);
+        if (shapeFell) {
+            board.removeFullRows();
+            setNewShape();
+            currentShape.addObserver(boardObserver);
+            shapeFell = false;
+        } else {
+            currentShape.moveDown();
+            if (isFallingFinished()) {
+                board.addFallenShape(currentShape);
+                shapeFell = true;
+            }
+        }
     }
 
     public boolean isFreeSquare(int x, int y) {
